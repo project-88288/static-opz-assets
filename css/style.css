@@ -6,11 +6,13 @@
 }
 
 body {
+  width: 100%;
   font-family: Arial, sans-serif;
 }
 
 /* Style the header, main, and footer sections */
 header {
+  width: 100%;
   background-color: #f1f1f1;
   padding: 20px;
   text-align: center;
@@ -21,6 +23,7 @@ main {
 }
 
 footer {
+  width: 100%;
   background-color: #f1f1f1;
   padding: 20px;
   text-align: center;
