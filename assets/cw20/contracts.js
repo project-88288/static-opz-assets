@@ -1,0 +1,1 @@
+module.exports = { localterra: {}, mainnet: {}, testnet: {}, classic: {} }
