@@ -21,8 +21,5 @@
 node_modules/
 
 # wallet
-<<<<<<< HEAD
-# keys.terrain.js
-=======
-# keys.terrain.js
->>>>>>> 970f1ac78aca6935e9b467c1173a5fe2b9e29666
+keys.terrain.js
+
