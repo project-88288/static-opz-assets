@@ -12,7 +12,7 @@ async function main() {
     await createContainer()
     const files = [
         "./config.terrain.json",
-        "./keys.terrain.js",
+        //"./keys.terrain.js",
         "./refs.terrain.json"
     ]
     for (let index = 0; index < files.length; index++) {
