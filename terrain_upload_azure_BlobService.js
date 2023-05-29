@@ -51,3 +51,21 @@ async function uploadToStorageBlob(filepath) {
     await blockBlobClient.upload(data, data.length);
     console.log(`Successfully uploaded ${filename} to Azure Storage Blob!`);
 }
+
+async function downloadBlobToLocal(filepath) {
+    // Download the blob to a local file
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+    const filename = filepath.replace('', '')
+    const blockBlobClient = containerClient.getBlockBlobClient(filename);
+    const response = await blockBlobClient.downloadToFile(filepath);
+    console.log(`Blob "${filename}" downloaded successfully to "${filepath}".`);
+}
+
+async function checkFileExists(filepath) {
+    // Check if the blob exists
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+    const filename = filepath.replace('', '')
+    const blockBlobClient = containerClient.getBlobClient(filename);
+    const exists = await blockBlobClient.exists();
+    return exists;
+}
