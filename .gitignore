@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+
+# Text file backups
+**/*.rs.bk
+
+# Build results
+# target/
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# Auto-gen
+.cargo-ok
+
+# artifacts
+
+# Node
+node_modules/
+
+# wallet
+<<<<<<< HEAD
+# keys.terrain.js
+=======
+# keys.terrain.js
+>>>>>>> 970f1ac78aca6935e9b467c1173a5fe2b9e29666
