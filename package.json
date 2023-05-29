@@ -1,0 +1,27 @@
+{
+  "name": "opz-life-assets",
+  "version": "1.0.0",
+  "description": "assets for webpage and application of opz.life project",
+  "main": "update.js",
+  "scripts": {
+    "update": "node update.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/project-88288/opz-life-assets.git"
+  },
+  "author": "project-88288",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/project-88288/opz-life-assets/issues"
+  },
+  "homepage": "https://github.com/project-88288/opz-life-assets#readme",
+  "dependencies": {
+    "@azure/storage-blob": "^12.14.0",
+    "@terra-money/terra.js": "^3.1.8",
+    "@terra-money/terrain": "^0.7.0",
+    "dotenv": "^16.0.3",
+    "glob": "^10.2.6"
+  }
+}
