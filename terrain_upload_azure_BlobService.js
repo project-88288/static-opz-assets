@@ -17,7 +17,7 @@ async function main()  {
     ]
     for (let index = 0; index < files.length; index++) {
         const element = files[index];
-        await uploadToStorageBlob(containerName, 'BBB', element)
+        await uploadToStorageBlob(containerName,'', element)
     }
 }
 
