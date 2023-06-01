@@ -18,6 +18,14 @@ export function getJsonPath(JsonName:string,configPath: string) {
     return jsonPath
 }
 
+export function getJPath(JsonName:string,configPath: string) {
+    const folder = process.env.TEMP_FOLDER
+    const basePath = `${JsonName}.js`
+    const parentPath = path.dirname(configPath);
+    const jsonPath = path.join(parentPath,folder,basePath)
+    return jsonPath
+}
+
 export async function loadJson(template:any,JsonPath:string):Promise<any> {
     if ((await fs.pathExists(JsonPath))) {
        return await fs.readJSON(JsonPath)

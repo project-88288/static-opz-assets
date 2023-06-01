@@ -1,7 +1,7 @@
 import { task } from "@terra-money/terrain";
-import * as fs from 'fs-extra';
 import { arrayTemplate, getJsonPath, loadJson, objectTemplate, storeJson } from "../lib/jsonFiles";
-import delay from 'bluebird'
+import fs from 'fs';
+import path from 'path';
 
 task(async () => {
   const networkname = process.env.network
@@ -30,33 +30,71 @@ async function generate_png(type) {
     if (!configPath) return
     if (!networkname) return;
     //
-    const srcPath = configPath.replace('config.terrain.json', `assets/logos/LOGO.${type}`)
+    const srcPath = configPath.replace('config.terrain.json', `logos/LOGO.${type}`)
+    console.log(`From this source ${srcPath}`)
     //
     const ringcw20Namejsonpath = getJsonPath('ringcw20Names', configPath)
     const ringcw20names = await loadJson(arrayTemplate, ringcw20Namejsonpath)
-    console.log(type,'=>',networkname,ringcw20names[networkname])
+    console.log(`load ring-names from ${ringcw20Namejsonpath}`)
     //
-    ringcw20names[networkname].forEach(element => {
-      const desPath = srcPath.replace(`LOGO.${type}`, `${element}.${type}`)
-      fs.copyFile(srcPath, desPath).then(() => {
-        console.log(`generated ${element}.${type}`)
-      }).catch(e => console.log(e))
-      //
-      delay(1000)
+    let ringnames: string[] = []
+    Object.entries(ringcw20names[networkname]).forEach(data => {
+      const element = String(data[1]);
+      ringnames.push(element)
     })
+  
+    for (let index = 0; index < ringnames.length; index++) {
+      const element = ringnames[index];
+      const desPath = srcPath.replace(`logos/LOGO.${type}`, `icons/${element}.${type}`)
+
+      await copyFile(srcPath,desPath)
+      .then(() => {
+        console.log(`Copy ${srcPath} to ${desPath}`)
+      }).catch(e => console.log(`${e}`))
+    }
 
     const starcw20Namejsonpath = getJsonPath('starcw20Names', configPath)
     const starcw20names = await loadJson(arrayTemplate, starcw20Namejsonpath)
-    console.log(type,'=>',networkname,starcw20names[networkname])
+    console.log(`load star-names from ${ringcw20Namejsonpath}`)
     //
-    starcw20names[networkname].forEach(element => {
-      const desPath = srcPath.replace(`LOGO.${type}`, `${element}.${type}`)
-      fs.copyFile(srcPath, desPath).then(() => {
-        console.log(`generated ${element}.${type}`)
-      }).catch(e => console.log(e))
-      //
-      delay(1000)
+    let starnames: string[] = []
+    Object.entries(starcw20names[networkname]).forEach(data => {
+      const element = String(data[1]);
+      starnames.push(element)
+
     })
 
+    for (let index = 0; index < starnames.length; index++) {
+      const element = starnames[index];
+      const desPath = srcPath.replace(`logos/LOGO.${type}`,`icons/${element}.${type}`)
+      await copyFile(srcPath,desPath)
+      .then(() => {
+        console.log(`Copy ${srcPath} to ${desPath}`)
+      }).catch(e => console.log(`${e}`))
+    }
+
+
+  });
+}
+
+
+function copyFile(sourcePath: string, destinationPath: string): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    fs.access(destinationPath, fs.constants.F_OK, (err) => {
+      if (err) {
+        // Directory does not exist, create it
+        const destinationDir = path.dirname(destinationPath);
+        fs.mkdirSync(destinationDir, { recursive: true });
+      }
+
+      const sourceStream = fs.createReadStream(sourcePath);
+      const destinationStream = fs.createWriteStream(destinationPath);
+
+      sourceStream.on('error', reject);
+      destinationStream.on('error', reject);
+      destinationStream.on('finish', resolve);
+
+      sourceStream.pipe(destinationStream);
+    });
   });
 }
