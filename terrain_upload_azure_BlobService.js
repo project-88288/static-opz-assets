@@ -1,19 +1,25 @@
 #!/usr/bin/env node
 
-const { uploadToStorageBlob } = require("./lib/azure_blobService")
+const { uploadToStorageBlob, checkAzureStorageAccess } = require("./lib/azure_blobService")
 
 const containerName = 'terrain'
 
-async function main()  {
+async function main() {
 
-    const files = [
-        "./config.terrain.json",
-        //"./keys.terrain.js",
-        "./refs.terrain.json"
-    ]
-    for (let index = 0; index < files.length; index++) {
-        const element = files[index];
-        await uploadToStorageBlob(containerName,'.', element)
+    if (await checkAzureStorageAccess()) {
+
+        const files = [
+            "./config.terrain.json",
+            //"./keys.terrain.js",
+            "./refs.terrain.json"
+        ]
+
+        console.log(files)
+
+        for (let index = 0; index < files.length; index++) {
+            const element = files[index];
+            await uploadToStorageBlob(containerName, '.', element)
+        }
     }
 }
 
