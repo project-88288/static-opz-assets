@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+require('dotenv').config();
 const { uploadToStorageBlob, checkAzureStorageAccess } = require("./lib/azure_blobService")
 
 const containerName = 'terrain'

@@ -1,31 +1,27 @@
-const readline = require('readline');
+#!/usr/bin/env node
 
-const intro = ' This program is designed to update a icons with new logos from ./logos directory.\
-It provides update icons into ./icons and also updating into the clound on azure with \
-the latest information. The program require input of network name mainnet,\
- localterra, testnet or classic.'
+require('dotenv').config();
+const { downloadBlobToLocal, checkAzureStorageAccess } = require("./lib/azure_blobService")
 
- console.log(intro)
+const containerName = 'terrain'
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
+async function main() {
 
-// Function to process user input
-function processData(networkName) {
-  // Create an object to store the network data
-  const networkData = {
-    name: networkName,
-    // Add more properties as needed
-  };
+  if (await checkAzureStorageAccess()) {
 
-  // Print the network data object
-  console.log(networkData);
+    const files = [
+      "./config.terrain.json",
+      "./keys.terrain.js",
+      "./refs.terrain.json"
+    ]
 
-  // Close the readline interface
-  rl.close();
+    console.log(files)
+
+    for (let index = 0; index < files.length; index++) {
+      const element = files[index];
+      await downloadBlobToLocal(containerName, '.', element)
+    }
+  }
 }
 
-// Prompt the user for network name
-rl.question('Enter the network name: ', processData);
+main();
