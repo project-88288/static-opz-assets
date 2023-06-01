@@ -49,6 +49,11 @@ async function generate_png(type) {
         const element = String(data[1]);
         ringnames.push(element)
       })
+      //
+      const ringcw20NameArraypath = getJsonPath('ringcw20Array', configPath)
+      let ringrnamesJson = await loadJson(arrayTemplate, ringcw20NameArraypath)
+      ringrnamesJson[networkname] = ringnames;
+      await storeJson(ringrnamesJson, ringcw20NameArraypath)
 
       for (let index = 0; index < ringnames.length; index++) {
         const element = ringnames[index];
@@ -61,6 +66,7 @@ async function generate_png(type) {
       }
 
       const starcw20Namejsonpath = getJsonPath('starcw20Names', configPath)
+    
       const starcw20names = await loadJson(arrayTemplate, starcw20Namejsonpath)
       console.log(`load star-names from ${ringcw20Namejsonpath}`)
       //
@@ -68,8 +74,12 @@ async function generate_png(type) {
       Object.entries(starcw20names[networkname]).forEach(data => {
         const element = String(data[1]);
         starnames.push(element)
-
       })
+      //
+      const starcw20NameAraypath = getJsonPath('starcw20Array', configPath)
+      let starnamesJson = await loadJson(arrayTemplate, starcw20NameAraypath)
+      starnamesJson[networkname] = starnames;
+      await storeJson(starnamesJson,starcw20NameAraypath)
 
       for (let index = 0; index < starnames.length; index++) {
         const element = starnames[index];
@@ -83,7 +93,7 @@ async function generate_png(type) {
   });
 }
 
-function isFilesExists(filePath: string):boolean  {
+function isFilesExists(filePath: string): boolean {
   // Check if the file exists
   try {
     fs.accessSync(filePath, fs.constants.F_OK);
