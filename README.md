@@ -1,4 +1,4 @@
-Readme File for Project-88288
+Readme File for Project-88288 (for logos)
 This repository contains the code and documentation for Project-88288.
 
 Project-88288 is a web application that aims to provide a platform for collaborative project management. It offers features such as task tracking, file sharing, and communication tools to facilitate teamwork and enhance productivity.
